@@ -25,6 +25,7 @@ humidity = -100.0
 
 
 def fetch_centigrade_and_humidity():
+    logging.debug('Fetching temp and humidity')
     global temperature, humidity
     rr = client.read_holding_registers(0, 4, unit=UNIT)
     temperature = rr.registers[0] / 10.0
@@ -107,8 +108,8 @@ def run_httpd(server_class=HTTPServer, handler_class=S, port=8000):
 
 
 def fetch_and_test_temparature():
+    print('Starting modbus poll thread')
     while True:
-        logging.debug('Fetching temp and humidity')
         fetch_centigrade_and_humidity()
         global temperature
         if temperature >= MAX_TEMP:
